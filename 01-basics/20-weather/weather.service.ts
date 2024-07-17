@@ -219,3 +219,5 @@ export function getWeatherData(): WeatherData[] {
     },
   ]
 }
+
+export type { WeatherData }
