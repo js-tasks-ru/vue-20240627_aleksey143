@@ -19,6 +19,7 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const deleteEmailHandler = index => {
+      //проброс на самый вверх эмита без v-on="$listeners" не знаю, но его не проходили
       emit('deleteEmail', index)
     }
 
