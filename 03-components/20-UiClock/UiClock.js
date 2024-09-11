@@ -4,8 +4,6 @@ export default defineComponent({
   name: 'UiClock',
 
   setup() {
-    const showTime = ref(true)
-
     const currentTime = ref('')
 
     const timerId = ref()
@@ -29,10 +27,9 @@ export default defineComponent({
     })
 
     return {
-      showTime,
       currentTime,
     }
   },
 
-  template: `<div v-show="showTime" class="clock">{{ currentTime }}</div>`,
+  template: `<div class="clock">{{ currentTime }}</div>`,
 })

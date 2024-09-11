@@ -1,4 +1,4 @@
-import { defineComponent, type PropType } from 'vue'
+import { computed, defineComponent, type PropType } from 'vue'
 import { WeatherConditionIcons, type WeatherData } from '../weather.service.ts'
 
 import { convertTime } from '../utils.ts'
@@ -17,17 +17,21 @@ export default defineComponent({
   },
 
   setup(props) {
-    const alertTitle = `${props.item?.alert?.sender_name}: ${props.item?.alert?.description}`
+    const alertTitle = computed(() => `${props.item?.alert?.sender_name}: ${props.item?.alert?.description}`)
 
     const temp = (props.item.current.temp - 273.15).toFixed(1)
 
-    const icon = WeatherConditionIcons[props.item.current.weather.id]
-    const pressure = (props.item.current.pressure * 0.75).toFixed(0)
+    const icon = computed(() => WeatherConditionIcons[props.item.current.weather.id])
 
-    const tdMinutes = convertTime(props.item.current.dt)
+    const pressure = computed(() => (props.item.current.pressure * 0.75).toFixed(0))
 
-    const isNight =
-      tdMinutes > convertTime(props.item.current.sunset) && tdMinutes < convertTime(props.item.current.sunrise)
+    const tdMinutes = computed(() => convertTime(props.item.current.dt))
+
+    const isNight = computed(
+      () =>
+        tdMinutes.value > convertTime(props.item.current.sunset) &&
+        tdMinutes.value < convertTime(props.item.current.sunrise),
+    )
 
     return {
       alertTitle,
