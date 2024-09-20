@@ -15,6 +15,19 @@ export default defineComponent({
     },
   },
 
+  emits: ['deleteEmail'],
+
+  setup(props, { emit }) {
+    const deleteEmailHandler = index => {
+      //проброс на самый вверх эмита без v-on="$listeners" не знаю, но его не проходили
+      emit('deleteEmail', index)
+    }
+
+    return {
+      deleteEmailHandler,
+    }
+  },
+
   template: `
     <ul class="emails-list unstyled-list" aria-label="Emails">
       <EmailListItem
@@ -22,6 +35,7 @@ export default defineComponent({
         :key="email"
         :email="email"
         :marked="isMarked"
+        @deleteEmail="()=>deleteEmailHandler(index)"
       />
     </ul>
   `,
